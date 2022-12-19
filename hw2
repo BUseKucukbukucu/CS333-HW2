@@ -1,0 +1,163 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class hw2 {
+
+    public static int[][] checkMatchArr;
+    public static int[][] valuesOfIJ;
+    public static int[] jValues;
+
+    public static int max;
+
+    public static ArrayList<String> Lamp= new ArrayList<>();
+    public static ArrayList<String>  Outlet= new ArrayList<>();
+    public static int n;
+    public static int num=0;
+
+    public static void main(String [] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the number of outlets");
+        n = scanner.nextInt();
+
+        checkMatchArr=new int[n][n];
+        jValues=new int[n];
+
+        Outlet=createOutlets(Outlet);
+        Lamp=createLamps(Lamp);
+        // we store the outlet and lamp inputs from user in ArrayList with functions
+        jValues=algorithm(n,Outlet,Lamp,checkMatchArr);
+        ArrayList<Integer> res=new ArrayList<>();
+        //res=LIS(jValues);
+        int maxm=LIS2(jValues,n);
+        printResult(maxm);
+       // printResult(res,Outlet);
+
+    }
+
+    public static ArrayList<String> createLamps(ArrayList<String> newLamps){
+        Scanner scanner=new Scanner(System.in);
+
+        for(int i=0;i< newLamps.size();i++){
+            System.out.println("Please enter 2 digit for " +(i+1)+" . lamp code. Lamp codes should be different from each other");
+            System.out.println("Consider to give same codes with outlet codes, the order is your choice");
+            String str= scanner.next();
+            if(newLamps.contains(str)){
+            newLamps.add(str);
+        }
+            else{
+                System.out.println("You already gave this code as a lamp, its illegal. Start the program again");
+            break;}
+        }
+
+        return newLamps;
+    }
+
+    public static ArrayList<String> createOutlets(ArrayList<String> newOutlets){
+        Scanner scanner=new Scanner(System.in);
+
+        for(int i=0;i< newOutlets.size();i++){
+            System.out.println("Please enter 2 digit for " +(i+1)+" . Outlet code. Outlet codes should be different from each other");
+            String str= scanner.next();
+            if(!newOutlets.contains(str)){
+            newOutlets.add(str);
+        }
+        else{
+                System.out.println("You already gave this code to an outlet, its illegal. Start the program again");
+        break;}
+        }
+
+
+        return newOutlets;
+    }
+
+
+    public static int[] algorithm(int n, ArrayList<String>  O,ArrayList<String>  L, int[][] checkM){
+        int[][] checkMatch=new int[n][n];
+        checkMatch=checkM;
+        String check;
+        int index;
+
+
+    for(int i=0;i<n;i++) {
+        check=O.get(i);
+
+       index=L.indexOf(check);
+
+        for (int j = 0; j < n; j++) {
+            checkMatch[i][j] = 0;
+
+            if(j==index){
+                num++;
+                checkMatch[i][j] = 1;
+                valuesOfIJ[i][0]=i;
+                valuesOfIJ[i][1]= j;
+                jValues[i]=index;
+
+
+            }
+
+
+        }}
+        return jValues;
+    }
+
+
+    public static int LIS(int[] j, int length){
+    // function that finds longest subsequence
+        ArrayList<Integer> aL=new ArrayList<>();
+        length=j.length;
+        int l[] = new int[length];
+        int m=0;
+
+         int r=1;
+         int maxMatch=1;
+
+        if(length==1){
+            aL.add(j[0]);
+
+        return 1;}
+
+        for(int i=1;i<length;i++){
+
+            r=LIS(j, i);
+
+            if(r+1> maxMatch && j[i-1]< j[length-1]){
+                maxMatch=r+1;
+            }
+
+        if(max<maxMatch){
+            max=maxMatch;
+
+    }    }return maxMatch;}
+
+
+    public static int LIS2(int[] jV, int len) {
+
+        max=1;
+
+        LIS(jV,n);
+
+        return max;
+    }
+
+  /*  public static void printResult(ArrayList<Integer> result, ArrayList<String> outletList){
+        int ind= result.size();
+
+        int maxMatch= result.get(ind);
+        System.out.println("Here is the results: ");
+        System.out.println(maxMatch);
+
+        for(int i=0;i<result.size()-1;i++){
+
+            System.out.println(outletList.get(i)+ " ");
+        }
+
+    }*/
+
+        public static void printResult(int maxx){
+
+            System.out.println("Here is the results: ");
+            System.out.println(max);
+        }
